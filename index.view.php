@@ -16,19 +16,32 @@
 	</header>
 	<main>
 		<section class="articles-container">
-			<article class="articles">1- Lorem ipsum, dolor sit amet consectetur adipisicing elit.</article>
-			<article class="articles">2- Lorem ipsum, dolor sit amet consectetur adipisicing elit.</article>
-			<article class="articles">3- Lorem ipsum, dolor sit amet consectetur adipisicing elit.</article>
-			<article class="articles">4- Lorem ipsum, dolor sit amet consectetur adipisicing elit.</article>
+			<?php foreach($articles as $article): ?>
+				<article class="articles"><?php echo $article['id'] . ". " . $article['article'] ?></article>
+			<?php endforeach; ?>
 		</section>
 		<section class="pagination">
 			<ul class="pagination__ul">
-				<li class="pagination__item disabled"><a href="#">&laquo;</a></li>
-				<li class="pagination__item active"><a href="#">1</a></li>
-				<li class="pagination__item"><a href="#">2</a></li>
-				<li class="pagination__item"><a href="#">3</a></li>
-				<li class="pagination__item"><a href="#">4</a></li>
-				<li class="pagination__item"><a href="#">&raquo;</a></li>
+				<?php if($page == 1): ?>
+					<li class="pagination__item disabled">&laquo;</li>
+					<?php else: ?>
+						<li class="pagination__item"><a href="?page=<?php echo $page - 1 ?>">&laquo;</a></li>
+				<?php endif; ?>
+
+				<?php
+					for($i = 1; $i <= $totalPages; $i++) {
+						if($i == $page) {
+							echo "<li class='pagination__item active'><a href='?page=$i'>$i</a></li>";
+						} else {
+							echo "<li class='pagination__item'><a href='?page=$i'>$i</a></li>";
+						}
+					}
+				?>
+				<?php if($page == $totalPages): ?>
+					<li class="pagination__item disabled">&raquo;</li>
+					<?php else: ?>
+						<li class="pagination__item"><a href="?page=<?php echo $page + 1 ?>">&raquo;</a></li>
+				<?php endif; ?>
 			</ul>
 		</section>
 	</main>

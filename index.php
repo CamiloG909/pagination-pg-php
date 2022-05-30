@@ -29,7 +29,13 @@ $articles -> execute();
 
 $articles = $articles -> fetchAll();
 
-require './index.view.php'
+if(!$articles) {
+	header('Location: index.php');
+}
 
+$totalArticles = $articles[0]['total_count'];
+$totalPages = ceil($totalArticles / $postPerPage);
+
+require './index.view.php'
 
 ?>
